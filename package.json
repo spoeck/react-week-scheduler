@@ -18,7 +18,7 @@
     "fullcalendar"
   ],
   "main": "index.js",
-  "module": "index.mjs",
+  "module": "index.es.js",
   "types": "./src/index.d.ts",
   "dependencies": {
     "@reach/visually-hidden": "^0.1.2",
@@ -26,7 +26,6 @@
     "classcat": "^3.2.5",
     "date-fns": "^1.30.1",
     "invariant": "^2.2.4",
-    "lodash": "^4.17.11",
     "merge-ranges": "^1.0.2",
     "mousetrap": "^1.6.3",
     "re-resizable": "^4.11.0",
@@ -36,9 +35,10 @@
   },
   "peerDependencies": {
     "pepjs": "^0.5.0",
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "resize-observer-polyfill": "^1.5.1"
+    "react": ">= 16.13.1",
+    "react-dom": ">= 16.13.1",
+    "resize-observer-polyfill": ">= 1.5.1",
+    "lodash": ">= 4.17.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -47,7 +47,6 @@
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
-    "@commitlint/cli": "^7.5.2",
     "@svgr/parcel-plugin-svgr": "^4.1.0",
     "@tippy.js/react": "^2.1.1",
     "@types/invariant": "^2.2.29",
@@ -75,7 +74,6 @@
     "gh-pages": "^2.0.1",
     "humanize-duration": "^3.18.0",
     "husky": "^1.3.1",
-    "lint-staged": "^8.1.5",
     "node-sass": "^4.11.0",
     "nodemon": "^1.18.10",
     "npm-run-all": "^4.1.5",
@@ -109,8 +107,6 @@
     "yarnhook": "^0.4.0"
   },
   "scripts": {
-    "pre-commit": "yarn common-check",
-    "lint-staged": "lint-staged",
     "check-prettier": "prettier '**/*.{t,j}s{,x}' '**/*.{css,scss,json,md}' --list-different",
     "common-check": "run-p -c --aggregate-output lint check-prettier check-integrity",
     "check-integrity": "yarn check --integrity",
@@ -131,13 +127,11 @@
     "types/ts": "yarn tsc -p ./tsconfig.types.json",
     "types": "run-s types/scss types/ts",
     "clean": "rimraf dist index.js index.mjs src/{!types}/*.d.ts index.css 'demo/**/*.d.ts' 'src/**/*.d.ts' 'src/**/*.map' './*.map'",
-    "prebuild": "npm-run-all -s clean -p lint check-ts",
     "build/demo": "NODE_ENV=production parcel build demo/index.html --public-url /react-week-scheduler/",
-    "build": "npm-run-all -s clean -p --aggregate-output types build/demo rollup",
+    "build": "npm-run-all types rollup",
     "deploy/demo": "gh-pages -d dist",
     "run-prettier": "prettier --write '*.json' 'types/**/*.ts' 'src/**/*.ts{,x}' 'src/**/*.scss'",
-    "semantic-release": "semantic-release",
-    "commitlint": "commitlint -e $GIT_PARAMS"
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",

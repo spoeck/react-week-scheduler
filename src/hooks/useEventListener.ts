@@ -18,9 +18,9 @@ export function useEventListener<
     }
 
     if (enabled) {
-      current.addEventListener(event, listener, options);
+      current.addEventListener(event, listener as any, options);
     } else if (listener) {
-      current.removeEventListener(event, listener);
+      current.removeEventListener(event, listener as any);
     }
 
     return () => {
@@ -28,7 +28,7 @@ export function useEventListener<
         return;
       }
 
-      current.removeEventListener(event, listener);
+      current.removeEventListener(event, listener as any);
     };
   }, [current, event, listener, options, enabled]);
 }
