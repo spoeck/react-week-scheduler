@@ -1,5 +1,6 @@
 // @ts-ignore
 import VisuallyHidden from '@reach/visually-hidden';
+import de from 'date-fns/locale/de';
 import React, { useContext } from 'react';
 import { SchedulerContext } from '../context';
 import { ClassNames } from '../types';
@@ -7,6 +8,10 @@ import {
   getFormattedComponentsForDateRange,
   getTextForDateRange,
 } from '../utils/getTextForDateRange';
+import {
+  getFormattedComponentsForDateRangeDE,
+  getTextForDateRangeDE,
+} from '../utils/getTextForDateRangeDE';
 
 export type EventContentProps = {
   width: number;
@@ -26,11 +31,18 @@ export const EventContent = React.memo(function EventContent({
   isEnd,
 }: EventContentProps) {
   const { locale } = useContext(SchedulerContext);
-  const [start, end] = getFormattedComponentsForDateRange({
-    dateRange,
-    locale,
-    includeDayIfSame: false,
-  });
+  const [start, end] =
+    locale === de
+      ? getFormattedComponentsForDateRangeDE({
+          dateRange,
+          locale,
+          includeDayIfSame: false,
+        })
+      : getFormattedComponentsForDateRange({
+          dateRange,
+          locale,
+          includeDayIfSame: false,
+        });
 
   return (
     <div
@@ -38,7 +50,9 @@ export const EventContent = React.memo(function EventContent({
       className={classes['event-content']}
     >
       <VisuallyHidden>
-        {getTextForDateRange({ dateRange, locale })}
+        {locale === de
+          ? getTextForDateRangeDE({ dateRange, locale })
+          : getTextForDateRange({ dateRange, locale })}
       </VisuallyHidden>
       <span aria-hidden className={classes.start}>
         {isStart && start}

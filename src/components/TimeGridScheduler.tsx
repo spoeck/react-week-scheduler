@@ -4,6 +4,7 @@ import addDays from 'date-fns/add_days';
 import addHours from 'date-fns/add_hours';
 import format from 'date-fns/format';
 import isDateEqual from 'date-fns/is_equal';
+import de from 'date-fns/locale/de';
 import startOfDay from 'date-fns/start_of_day';
 import invariant from 'invariant';
 import isEqual from 'lodash/isEqual';
@@ -132,9 +133,7 @@ export const TimeGridScheduler = React.memo(function TimeGridScheduler({
       const [first, ...rest] = cellInfoToDateRanges(cell);
       invariant(
         rest.length === 0,
-        `Expected "cellInfoToSingleDateRange" to return a single date range, found ${
-          rest.length
-        } additional ranges instead. This is a bug in @remotelock/react-week-scheduler`,
+        `Expected "cellInfoToSingleDateRange" to return a single date range, found ${rest.length} additional ranges instead. This is a bug in @remotelock/react-week-scheduler`,
       );
 
       return first;
@@ -460,7 +459,9 @@ export const TimeGridScheduler = React.memo(function TimeGridScheduler({
                         if (isHourStart) {
                           return (
                             <div className={classes.time}>
-                              {format(start, 'h a', { locale })}
+                              {locale === de
+                                ? format(start, 'H', { locale })
+                                : format(start, 'h a', { locale })}
                             </div>
                           );
                         }
