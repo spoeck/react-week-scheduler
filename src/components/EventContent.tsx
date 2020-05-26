@@ -1,7 +1,6 @@
 // @ts-ignore
 import VisuallyHidden from '@reach/visually-hidden';
 import de from 'date-fns/locale/de';
-import en from 'date-fns/locale/en';
 import React, { useContext } from 'react';
 import { SchedulerContext } from '../context';
 import { ClassNames } from '../types';
@@ -32,11 +31,6 @@ export const EventContent = React.memo(function EventContent({
   isEnd,
 }: EventContentProps) {
   const { locale } = useContext(SchedulerContext);
-  console.log('$$$$$$$$$');
-  console.log(locale);
-  console.log(locale === de);
-  console.log(locale === en);
-  console.log('-$$$$$$$$$');
   const [start, end] =
     locale === de
       ? getFormattedComponentsForDateRangeDE({

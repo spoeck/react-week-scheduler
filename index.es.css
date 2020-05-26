@@ -3,6 +3,7 @@
   touch-action: none; }
 
 .styles-module_theme__1FIRA {
+  height: 100%;
   --color-cell-border: hsl(204, 11%, 83%);
   --color-drag-box-border: hsla(209, 97%, 50%, 0.5);
   --color-drag-box-background: hsla(209, 97%, 65%, 0.5);

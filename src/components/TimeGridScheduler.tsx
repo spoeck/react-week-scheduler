@@ -460,7 +460,7 @@ export const TimeGridScheduler = React.memo(function TimeGridScheduler({
                           return (
                             <div className={classes.time}>
                               {locale === de
-                                ? format(start, 'H', { locale })
+                                ? format(start, 'H:mm', { locale })
                                 : format(start, 'h a', { locale })}
                             </div>
                           );
