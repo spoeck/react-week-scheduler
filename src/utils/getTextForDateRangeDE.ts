@@ -69,5 +69,5 @@ export const getFormattedComponentsForDateRangeDE = ({
 };
 
 export const getTextForDateRangeDE = (options: Options) => {
-  return getFormattedComponentsForDateRange(options).join(' – ');
+  return getFormattedComponentsForDateRangeDE(options).join(' – ');
 };
