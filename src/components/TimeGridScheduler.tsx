@@ -62,6 +62,7 @@ export const TimeGridScheduler = React.memo(function TimeGridScheduler({
   eventContentComponent,
   eventRootComponent,
   disabled,
+  singleDay = false,
 }: {
   originDate?: Date;
 
@@ -108,11 +109,14 @@ export const TimeGridScheduler = React.memo(function TimeGridScheduler({
   eventContentComponent?: ScheduleProps['eventContentComponent'];
   eventRootComponent?: ScheduleProps['eventRootComponent'];
   disabled?: boolean;
+  singleDay?: boolean;
 }) {
   const { locale } = useContext(SchedulerContext);
   const originDate = useMemo(() => startOfDay(_originDate), [_originDate]);
   const numVerticalCells = MINS_IN_DAY / verticalPrecision;
-  const numHorizontalCells = 7 / horizontalPrecision;
+  const numHorizontalCells = singleDay
+    ? 1 / horizontalPrecision
+    : 7 / horizontalPrecision;
   const toMin = useCallback((y: number) => y * verticalPrecision, [
     verticalPrecision,
   ]);
@@ -485,14 +489,16 @@ export const TimeGridScheduler = React.memo(function TimeGridScheduler({
             role="presentation"
             className={classcat([classes.calendar, classes.header])}
           >
-            {times(7).map(i => (
+            {times(singleDay ? 1 : 7).map(i => (
               <div
                 key={i}
                 role="presentation"
                 className={classes['day-column']}
               >
                 <div className={classcat([classes.cell, classes.title])}>
-                  {format(addDays(originDate, i), 'ddd', { locale })}
+                  {singleDay
+                    ? ''
+                    : format(addDays(originDate, i), 'ddd', { locale })}
                 </div>
               </div>
             ))}
@@ -538,7 +544,7 @@ export const TimeGridScheduler = React.memo(function TimeGridScheduler({
           )}
 
           <div ref={parent} role="grid" className={classes.calendar}>
-            {times(7).map(dayIndex => {
+            {times(singleDay ? 1 : 7).map(dayIndex => {
               return (
                 <div
                   role="gridcell"
