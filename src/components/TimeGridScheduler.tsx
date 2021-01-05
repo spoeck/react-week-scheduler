@@ -63,6 +63,7 @@ export const TimeGridScheduler = React.memo(function TimeGridScheduler({
   eventRootComponent,
   disabled,
   singleDay = false,
+  singleDayLabel = 'Öffnungszeiten',
 }: {
   originDate?: Date;
 
@@ -110,6 +111,7 @@ export const TimeGridScheduler = React.memo(function TimeGridScheduler({
   eventRootComponent?: ScheduleProps['eventRootComponent'];
   disabled?: boolean;
   singleDay?: boolean;
+  singleDayLabel?: string;
 }) {
   const { locale } = useContext(SchedulerContext);
   const originDate = useMemo(() => startOfDay(_originDate), [_originDate]);
@@ -495,11 +497,11 @@ export const TimeGridScheduler = React.memo(function TimeGridScheduler({
                 role="presentation"
                 className={classes['day-column']}
               >
-                {!singleDay && (
-                  <div className={classcat([classes.cell, classes.title])}>
-                    {format(addDays(originDate, i), 'ddd', { locale })}
-                  </div>
-                )}
+                <div className={classcat([classes.cell, classes.title])}>
+                  {singleDay
+                    ? singleDayLabel
+                    : format(addDays(originDate, i), 'ddd', { locale })}
+                </div>
               </div>
             ))}
           </div>
