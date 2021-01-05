@@ -1356,11 +1356,15 @@ var TimeGridScheduler = /*#__PURE__*/React.memo(function TimeGridScheduler(_ref)
 
 
 
-{var _ref$verticalPrecisio = _ref.verticalPrecision,verticalPrecision = _ref$verticalPrecisio === void 0 ? 30 : _ref$verticalPrecisio,_ref$visualGridVertic = _ref.visualGridVerticalPrecision,visualGridVerticalPrecision = _ref$visualGridVertic === void 0 ? 30 : _ref$visualGridVertic,_ref$cellClickPrecisi = _ref.cellClickPrecision,cellClickPrecision = _ref$cellClickPrecisi === void 0 ? visualGridVerticalPrecision : _ref$cellClickPrecisi,style = _ref.style,schedule = _ref.schedule,_ref$originDate = _ref.originDate,_originDate = _ref$originDate === void 0 ? new Date() : _ref$originDate,_ref$defaultHours = _ref.defaultHours,defaultHours = _ref$defaultHours === void 0 ? [9, 15] : _ref$defaultHours,classes = _ref.classes,className = _ref.className,onChange = _ref.onChange,onEventClick = _ref.onEventClick,eventContentComponent = _ref.eventContentComponent,eventRootComponent = _ref.eventRootComponent,disabled = _ref.disabled;var _useContext =
+
+
+{var _ref$verticalPrecisio = _ref.verticalPrecision,verticalPrecision = _ref$verticalPrecisio === void 0 ? 30 : _ref$verticalPrecisio,_ref$visualGridVertic = _ref.visualGridVerticalPrecision,visualGridVerticalPrecision = _ref$visualGridVertic === void 0 ? 30 : _ref$visualGridVertic,_ref$cellClickPrecisi = _ref.cellClickPrecision,cellClickPrecision = _ref$cellClickPrecisi === void 0 ? visualGridVerticalPrecision : _ref$cellClickPrecisi,style = _ref.style,schedule = _ref.schedule,_ref$originDate = _ref.originDate,_originDate = _ref$originDate === void 0 ? new Date() : _ref$originDate,_ref$defaultHours = _ref.defaultHours,defaultHours = _ref$defaultHours === void 0 ? [9, 15] : _ref$defaultHours,classes = _ref.classes,className = _ref.className,onChange = _ref.onChange,onEventClick = _ref.onEventClick,eventContentComponent = _ref.eventContentComponent,eventRootComponent = _ref.eventRootComponent,disabled = _ref.disabled,_ref$singleDay = _ref.singleDay,singleDay = _ref$singleDay === void 0 ? false : _ref$singleDay;var _useContext =
   useContext(SchedulerContext),locale = _useContext.locale;
   var originDate = useMemo(function () {return startOfDay(_originDate);}, [_originDate]);
   var numVerticalCells = MINS_IN_DAY / verticalPrecision;
-  var numHorizontalCells = 7 / horizontalPrecision;
+  var numHorizontalCells = singleDay ?
+  1 / horizontalPrecision :
+  7 / horizontalPrecision;
   var toMin = useCallback(function (y) {return y * verticalPrecision;}, [
   verticalPrecision]);
 
@@ -1733,13 +1737,15 @@ var TimeGridScheduler = /*#__PURE__*/React.memo(function TimeGridScheduler(_ref)
       role: "presentation",
       className: classcat([classes.calendar, classes.header]) },
 
-    times(7).map(function (i) {return /*#__PURE__*/(
+    times(singleDay ? 1 : 7).map(function (i) {return /*#__PURE__*/(
         React.createElement("div", {
           key: i,
           role: "presentation",
           className: classes['day-column'] }, /*#__PURE__*/
 
         React.createElement("div", { className: classcat([classes.cell, classes.title]) },
+        singleDay ?
+        '' :
         format(addDays(originDate, i), 'ddd', { locale: locale }))));}))), /*#__PURE__*/
 
 
@@ -1786,7 +1792,7 @@ var TimeGridScheduler = /*#__PURE__*/React.memo(function TimeGridScheduler(_ref)
 
 
     React.createElement("div", { ref: parent, role: "grid", className: classes.calendar },
-    times(7).map(function (dayIndex) {
+    times(singleDay ? 1 : 7).map(function (dayIndex) {
       return /*#__PURE__*/(
         React.createElement("div", {
           role: "gridcell",
