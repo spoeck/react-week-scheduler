@@ -1741,12 +1741,12 @@ var TimeGridScheduler = /*#__PURE__*/React.memo(function TimeGridScheduler(_ref)
         React.createElement("div", {
           key: i,
           role: "presentation",
-          className: classes['day-column'] }, /*#__PURE__*/
+          className: classes['day-column'] },
 
+        !singleDay && /*#__PURE__*/
         React.createElement("div", { className: classcat([classes.cell, classes.title]) },
-        singleDay ?
-        '' :
         format(addDays(originDate, i), 'ddd', { locale: locale }))));}))), /*#__PURE__*/
+
 
 
 
